@@ -63,6 +63,21 @@ namespace Sandwych.RmbConverter.Test {
         [Test]
         public void TestZero() {
             Assert.AreEqual("零元整", 0.00M.ToRmbUpper());
+            Assert.AreEqual("壹万零元壹角整", 10000.10M.ToRmbUpper());
+            Assert.AreEqual("壹万零元壹分", 10000.01M.ToRmbUpper());
+            Assert.AreEqual("壹仟零元壹角壹分", 1000.11M.ToRmbUpper());
+            Assert.AreEqual("壹仟零壹元壹角壹分", 1001.11M.ToRmbUpper());
+        }
+
+        [Test]
+        public void TestBaiduCases() {
+            //源自百度百科的测试用例 http://baike.baidu.com/view/2369188.htm
+            Assert.AreEqual("陆仟伍佰元整", 6500.00M.ToRmbUpper());
+            Assert.AreEqual("叁仟壹佰伍拾元零伍角整", 3150.50M.ToRmbUpper());
+            Assert.AreEqual("壹拾万零伍仟元整", 105000.00M.ToRmbUpper());
+            Assert.AreEqual("陆仟零叁万陆仟元整", 60036000.00M.ToRmbUpper());
+            Assert.AreEqual("叁万伍仟元零玖角陆分", 35000.96M.ToRmbUpper());
+            Assert.AreEqual("壹拾伍万零壹元整", 150001.00M.ToRmbUpper());
         }
     }
 

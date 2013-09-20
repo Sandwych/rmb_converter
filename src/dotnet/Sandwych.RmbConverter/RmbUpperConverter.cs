@@ -1,4 +1,4 @@
-﻿/** 大写人民币金额转换代码
+﻿/** 中文互联网上迄今为止实现最正确、代码最漂亮且效率最高的大写人民币金额转换代码 
  * 作者：李维 <oldrev@gmail.com>
  * 版权所有 (c) 2013 昆明维智众源企业管理咨询有限公司。保留所有权利。
  * 本代码基于 BSD License 授权。
@@ -34,27 +34,22 @@ namespace Sandwych.RmbConverter {
             var qianPart = integerPart % 10000L;
             var decPart = (long)(price * 100) % 100;
 
+            int zeroCount = 0;
             //处理万亿以上的部分
             if (integerPart >= 1000000000000L) {
-                ParseInteger(sb, wanyiPart);
+                zeroCount = ParseInteger(sb, wanyiPart, zeroCount);
                 sb.Append("万");
             }
 
             //处理亿到千亿的部分
             if (integerPart >= 100000000L) {
-                if (integerPart >= 1000000000000L && yiPart > 0 && yiPart <= 999) {
-                    sb.Append("零");
-                }
-                ParseInteger(sb, yiPart);
+                zeroCount = ParseInteger(sb, yiPart, zeroCount);
                 sb.Append("亿");
             }
 
             //处理万的部分
             if (integerPart >= 10000L) {
-                if (integerPart >= 100000000L && wanPart > 0 && wanPart <= 999) {
-                    sb.Append("零");
-                }
-                ParseInteger(sb, wanPart);
+                zeroCount = ParseInteger(sb, wanPart, zeroCount);
                 sb.Append("万");
             }
 
@@ -63,7 +58,7 @@ namespace Sandwych.RmbConverter {
                 sb.Append("零");
             }
             if (qianPart > 0) {
-                ParseInteger(sb, qianPart);
+                zeroCount = ParseInteger(sb, qianPart, zeroCount);
             }
 
             if (integerPart > 0) {
@@ -72,7 +67,7 @@ namespace Sandwych.RmbConverter {
 
             //处理小数
             if (decPart > 0) {
-                ParseDecimal(sb, integerPart, decPart);
+                ParseDecimal(sb, integerPart, decPart, zeroCount);
             }
             else if (decPart <= 0 && integerPart > 0) {
                 sb.Append("整");
@@ -84,15 +79,20 @@ namespace Sandwych.RmbConverter {
             return sb.ToString();
         }
 
-        private static void ParseDecimal(StringBuilder sb, long integerPart, long decPart) {
+        private static void ParseDecimal(StringBuilder sb, long integerPart, long decPart, int zeroCount = 0) {
             Debug.Assert(decPart > 0 && decPart <= 99);
             var jiao = decPart / 10;
             var fen = decPart % 10;
+
+            if (zeroCount > 0 && (jiao > 0 || fen > 0)) {
+                sb.Append("零");
+            }
+
             if (jiao > 0) {
                 sb.Append(RmbDigits[jiao]);
                 sb.Append("角");
             }
-            if (jiao == 0 && fen > 0 && integerPart > 0) {
+            if ((jiao == 0 && fen > 0 && integerPart > 0)) {
                 sb.Append("零");
             }
             if (fen > 0) {
@@ -104,10 +104,9 @@ namespace Sandwych.RmbConverter {
             }
         }
 
-        private static void ParseInteger(StringBuilder sb, long integer) {
+        private static int ParseInteger(StringBuilder sb, long integer, int zeroCount = 0) {
             Debug.Assert(integer > 0 && integer <= 9999);
             int nDigits = (int)Math.Floor(Math.Log10(integer)) + 1;
-            var zeroCount = 0;
             for (var i = 0; i < nDigits; i++) {
                 var factor = (long)Math.Pow(10, nDigits - 1 - i);
                 var digit = integer / factor;
@@ -127,6 +126,7 @@ namespace Sandwych.RmbConverter {
                 }
                 integer -= integer / factor * factor;
             }
+            return zeroCount;
         }
 
     }

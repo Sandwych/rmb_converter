@@ -1,6 +1,6 @@
 #encoding: utf-8
 '''
-中文互联网上写的最漂亮效率最高的大写人民币金额转换代码
+中文互联网上迄今为止实现最正确、代码最漂亮且效率最高的大写人民币金额转换代码
 作者：李维 <oldrev@gmail.com>
 版权所有 (c) 2013 李维。保留所有权利。
 本代码基于 BSD License 授权。
@@ -23,36 +23,31 @@ def to_rmb_upper(price):
 
     strio = StringIO()
 
+    zero_count = 0
     #处理万亿以上的部分
     if integer_part >= 1000000000000:
-        _parse_integer(strio, wanyi_part)
+        zero_count = _parse_integer(strio, wanyi_part, zero_count)
         strio.write('万')
 
     #处理亿到千亿的部分
     if integer_part >= 100000000:
-        if integer_part >= 1000000000000 and yi_part > 0 and yi_part <= 999:
-            strio.write('零')
-        _parse_integer(strio, yi_part)
+        zero_count = _parse_integer(strio, yi_part, zero_count)
         strio.write('亿')
 
     #处理万的部分
     if integer_part >= 10000:
-        if integer_part >= 100000000 and wan_part > 0 and wan_part <= 999:
-            strio.write('零')
-        _parse_integer(strio, wan_part)
+        zero_count = _parse_integer(strio, wan_part, zero_count)
         strio.write('万')
 
     #处理千及以后的部分
-    if integer_part >= 10000 and qian_part > 0 and qian_part <= 999:
-        strio.write('零');
     if qian_part > 0:
-        _parse_integer(strio, qian_part)
+        zero_count = _parse_integer(strio, qian_part, zero_count)
     if integer_part > 0:
         strio.write('元')
 
     #处理小数
     if dec_part > 0: 
-        _parse_decimal(strio, integer_part, dec_part)
+        _parse_decimal(strio, integer_part, dec_part, zero_count)
     elif dec_part == 0 and integer_part > 0:
         strio.write('整')
     else:
@@ -60,14 +55,13 @@ def to_rmb_upper(price):
 
     return strio.getvalue()
 
-def _parse_integer(strio, value):
+def _parse_integer(strio, value, zero_count = 0):
     assert value > 0 and value <= 9999
     ndigits = int(math.floor(math.log10(value))) + 1
-    zero_count = 0
+    #zero_count = 0
     for i in xrange(0, ndigits):
         factor = int(pow(10, ndigits - 1 - i))
         digit = int(value / factor)
-
         if digit != 0:
             if zero_count > 0:
                 strio.write('零')
@@ -78,11 +72,14 @@ def _parse_integer(strio, value):
             if i < ndigits:
                 zero_count += 1
         value -= value / factor * factor
+    return zero_count
 
-def _parse_decimal(strio, integer_part, value):
+def _parse_decimal(strio, integer_part, value, zero_count):
     assert value > 0 and value <= 99
     jiao = value / 10
     fen = value % 10
+    if zero_count > 0 and (jiao > 0 or fen > 0):
+        strio.write('零')
     if jiao > 0:
         strio.write(_RMB_DIGITS[jiao])
         strio.write('角')
