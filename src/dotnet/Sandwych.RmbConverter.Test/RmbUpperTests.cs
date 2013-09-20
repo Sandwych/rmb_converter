@@ -62,6 +62,17 @@ namespace Sandwych.RmbConverter.Test {
         [Test]
         public void TestZero() {
             Assert.AreEqual("零元整", 0.00M.ToRmbUpper());
+            Assert.AreEqual("壹元整", 1.00M.ToRmbUpper());
+            Assert.AreEqual("壹拾元整", 10.00M.ToRmbUpper());
+            Assert.AreEqual("壹佰元整", 100.00M.ToRmbUpper());
+            Assert.AreEqual("壹仟元整", 1000.00M.ToRmbUpper());
+            Assert.AreEqual("壹万元整", 10000.00M.ToRmbUpper());
+            Assert.AreEqual("壹拾万元整", 100000.00M.ToRmbUpper());
+            Assert.AreEqual("壹佰万元整", 1000000.00M.ToRmbUpper());
+            Assert.AreEqual("壹仟万元整", 10000000.00M.ToRmbUpper());
+            Assert.AreEqual("壹亿元整", 100000000.00M.ToRmbUpper());
+            Assert.AreEqual("壹拾亿元整", 1000000000.00M.ToRmbUpper());
+            Assert.AreEqual("壹佰亿元整", 10000000000.00M.ToRmbUpper());
             Assert.AreEqual("壹万元零壹角整", 10000.10M.ToRmbUpper());
             Assert.AreEqual("壹万元零壹分", 10000.01M.ToRmbUpper());
             Assert.AreEqual("壹仟元零壹角壹分", 1000.11M.ToRmbUpper());

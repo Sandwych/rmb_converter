@@ -36,20 +36,20 @@ namespace Sandwych.RmbConverter {
 
             int zeroCount = 0;
             //处理万亿以上的部分
-            if (integerPart >= 1000000000000L) {
+            if (integerPart >= 1000000000000L && wanyiPart > 0) {
                 zeroCount = ParseInteger(sb, wanyiPart, true, zeroCount);
                 sb.Append("万");
             }
 
             //处理亿到千亿的部分
-            if (integerPart >= 100000000L) {
+            if (integerPart >= 100000000L && yiPart > 0) {
                 var isFirstSection = integerPart >= 100000000L && integerPart < 1000000000000L;
                 zeroCount = ParseInteger(sb, yiPart, isFirstSection, zeroCount);
                 sb.Append("亿");
             }
 
             //处理万的部分
-            if (integerPart >= 10000L) {
+            if (integerPart >= 10000L && wanPart > 0) {
                 var isFirstSection = integerPart >= 1000L && integerPart < 10000000L;
                 zeroCount = ParseInteger(sb, wanPart, isFirstSection, zeroCount);
                 sb.Append("万");
@@ -126,9 +126,7 @@ namespace Sandwych.RmbConverter {
                     zeroCount = 0;
                 }
                 else {
-                    if (i < nDigits) {
-                        zeroCount++;
-                    }
+                    zeroCount++;
                 }
                 integer -= integer / factor * factor;
             }
