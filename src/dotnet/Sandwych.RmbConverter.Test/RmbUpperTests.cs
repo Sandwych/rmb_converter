@@ -39,9 +39,6 @@ namespace Sandwych.RmbConverter.Test {
             i = 345000012.33M;
             Assert.AreEqual("叁亿肆仟伍佰万零壹拾贰元叁角叁分", i.ToRmbUpper());
 
-            i = 0.30M;
-            Assert.AreEqual("叁角整", i.ToRmbUpper());
-
             i = 10100.03M;
             Assert.AreEqual("壹万零壹佰元零叁分", i.ToRmbUpper());
 
@@ -54,6 +51,18 @@ namespace Sandwych.RmbConverter.Test {
             i = 11010.12M;
             Assert.AreEqual("壹万壹仟零壹拾元壹角贰分", i.ToRmbUpper());
 
+        }
+
+        [Test]
+        public void TestDecimalProcessing() {
+            Assert.AreEqual("叁角整", 0.30M.ToRmbUpper());
+            Assert.AreEqual("叁角叁分", 0.33M.ToRmbUpper());
+            Assert.AreEqual("叁分", 0.03M.ToRmbUpper());
+        }
+
+        [Test]
+        public void TestZero() {
+            Assert.AreEqual("零元整", 0.00M.ToRmbUpper());
         }
     }
 

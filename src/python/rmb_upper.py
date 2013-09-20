@@ -52,9 +52,11 @@ def to_rmb_upper(price):
 
     #处理小数
     if dec_part > 0: 
-        _parse_decimal(strio, dec_part)
-    else:
+        _parse_decimal(strio, integer_part, dec_part)
+    elif dec_part == 0 and integer_part > 0:
         strio.write('整')
+    else:
+        strio.write('零元整')
 
     return strio.getvalue()
 
@@ -77,20 +79,17 @@ def _parse_integer(strio, value):
                 zero_count += 1
         value -= value / factor * factor
 
-def _parse_decimal(strio, value):
+def _parse_decimal(strio, integer_part, value):
     assert value > 0 and value <= 99
     jiao = value / 10
     fen = value % 10
     if jiao > 0:
         strio.write(_RMB_DIGITS[jiao])
         strio.write('角')
-    if jiao == 0 and fen > 0:
+    if jiao == 0 and fen > 0 and integer_part > 0:
         strio.write('零')
     if fen > 0:
         strio.write(_RMB_DIGITS[fen])
         strio.write('分')
     else:
         strio.write('整')
-
-
-print to_rmb_upper(91233.339999).decode('utf-8').encode('cp936')

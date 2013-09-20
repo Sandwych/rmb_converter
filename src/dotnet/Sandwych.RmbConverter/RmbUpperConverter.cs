@@ -4,13 +4,13 @@
  * 本代码基于 BSD License 授权。
  * */
 
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 
 namespace Sandwych.RmbConverter {
+
     public static class RmbUpperConverter {
 
         private static readonly Char[] RmbDigits = {
@@ -27,22 +27,22 @@ namespace Sandwych.RmbConverter {
             price = Math.Round(price, 2);
             var sb = new StringBuilder();
 
-            var wanyiPart = (long)price / 1000000000000L;
-            var yiPart = ((long)price % 1000000000000L) / 100000000L;
-            var wanPart = ((long)price % 100000000L) / 10000L;
-            var qianPart = (long)(price % 10000L);
             var integerPart = (long)price;
+            var wanyiPart = integerPart / 1000000000000L;
+            var yiPart = integerPart % 1000000000000L / 100000000L;
+            var wanPart = integerPart % 100000000L / 10000L;
+            var qianPart = integerPart % 10000L;
             var decPart = (long)(price * 100) % 100;
 
             //处理万亿以上的部分
-            if (price >= 1000000000000M) {
+            if (integerPart >= 1000000000000L) {
                 ParseInteger(sb, wanyiPart);
                 sb.Append("万");
             }
 
             //处理亿到千亿的部分
-            if (price >= 100000000M) {
-                if (price >= 1000000000000M && yiPart > 0 && yiPart <= 999) {
+            if (integerPart >= 100000000L) {
+                if (integerPart >= 1000000000000L && yiPart > 0 && yiPart <= 999) {
                     sb.Append("零");
                 }
                 ParseInteger(sb, yiPart);
@@ -50,8 +50,8 @@ namespace Sandwych.RmbConverter {
             }
 
             //处理万的部分
-            if (price >= 10000M) {
-                if (price >= 100000000M && wanPart > 0 && wanPart <= 999) {
+            if (integerPart >= 10000L) {
+                if (integerPart >= 100000000L && wanPart > 0 && wanPart <= 999) {
                     sb.Append("零");
                 }
                 ParseInteger(sb, wanPart);
@@ -59,7 +59,7 @@ namespace Sandwych.RmbConverter {
             }
 
             //处理千及以后的部分
-            if (price >= 10000M && qianPart > 0 && qianPart <= 999) {
+            if (integerPart >= 10000L && qianPart > 0 && qianPart <= 999) {
                 sb.Append("零");
             }
             if (qianPart > 0) {
@@ -72,16 +72,19 @@ namespace Sandwych.RmbConverter {
 
             //处理小数
             if (decPart > 0) {
-                ParseDecimal(sb, decPart);
+                ParseDecimal(sb, integerPart, decPart);
+            }
+            else if (decPart <= 0 && integerPart > 0) {
+                sb.Append("整");
             }
             else {
-                sb.Append("整");
+                sb.Append("零元整");
             }
 
             return sb.ToString();
         }
 
-        private static void ParseDecimal(StringBuilder sb, long decPart) {
+        private static void ParseDecimal(StringBuilder sb, long integerPart, long decPart) {
             Debug.Assert(decPart > 0 && decPart <= 99);
             var jiao = decPart / 10;
             var fen = decPart % 10;
@@ -89,7 +92,7 @@ namespace Sandwych.RmbConverter {
                 sb.Append(RmbDigits[jiao]);
                 sb.Append("角");
             }
-            if (jiao == 0 && fen > 0) {
+            if (jiao == 0 && fen > 0 && integerPart > 0) {
                 sb.Append("零");
             }
             if (fen > 0) {
@@ -127,6 +130,5 @@ namespace Sandwych.RmbConverter {
         }
 
     }
-
 
 }
