@@ -25,18 +25,18 @@ def to_rmb_upper(price):
 
     zero_count = 0
     #处理万亿以上的部分
-    if integer_part >= 1000000000000 and wanyi_part > 0:
+    if integer_part >= 1000000000000:
         zero_count = _parse_integer(strio, wanyi_part, zero_count, True)
         strio.write('万')
 
     #处理亿到千亿的部分
-    if integer_part >= 100000000 and yi_part > 0:
+    if integer_part >= 100000000:
         is_first_section = integer_part >= 100000000 and integer_part < 1000000000000 
         zero_count = _parse_integer(strio, yi_part, zero_count, is_first_section)
         strio.write('亿')
 
     #处理万的部分
-    if integer_part >= 10000 and wan_part > 0:
+    if integer_part >= 10000:
         is_first_section = integer_part >= 1000 and integer_part < 10000000 
         zero_count = _parse_integer(strio, wan_part, zero_count, is_first_section)
         strio.write('万')
@@ -95,3 +95,4 @@ def _parse_decimal(strio, integer_part, value, zero_count):
         strio.write('分')
     else:
         strio.write('整')
+
