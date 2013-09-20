@@ -37,28 +37,31 @@ namespace Sandwych.RmbConverter {
             int zeroCount = 0;
             //处理万亿以上的部分
             if (integerPart >= 1000000000000L) {
-                zeroCount = ParseInteger(sb, wanyiPart, zeroCount);
+                zeroCount = ParseInteger(sb, wanyiPart, true, zeroCount);
                 sb.Append("万");
             }
 
             //处理亿到千亿的部分
             if (integerPart >= 100000000L) {
-                zeroCount = ParseInteger(sb, yiPart, zeroCount);
+                var isFirstSection = integerPart >= 100000000L && integerPart < 1000000000000L;
+                zeroCount = ParseInteger(sb, yiPart, isFirstSection, zeroCount);
                 sb.Append("亿");
             }
 
             //处理万的部分
             if (integerPart >= 10000L) {
-                zeroCount = ParseInteger(sb, wanPart, zeroCount);
+                var isFirstSection = integerPart >= 1000L && integerPart < 10000000L;
+                zeroCount = ParseInteger(sb, wanPart, isFirstSection, zeroCount);
                 sb.Append("万");
             }
 
             //处理千及以后的部分
-            if (integerPart >= 10000L && qianPart > 0 && qianPart <= 999) {
-                sb.Append("零");
-            }
             if (qianPart > 0) {
-                zeroCount = ParseInteger(sb, qianPart, zeroCount);
+                var isFirstSection = integerPart < 1000L;
+                zeroCount = ParseInteger(sb, qianPart, isFirstSection, zeroCount);
+            }
+            else {
+                zeroCount += 1;
             }
 
             if (integerPart > 0) {
@@ -79,12 +82,12 @@ namespace Sandwych.RmbConverter {
             return sb.ToString();
         }
 
-        private static void ParseDecimal(StringBuilder sb, long integerPart, long decPart, int zeroCount = 0) {
+        private static void ParseDecimal(StringBuilder sb, long integerPart, long decPart, int zeroCount) {
             Debug.Assert(decPart > 0 && decPart <= 99);
             var jiao = decPart / 10;
             var fen = decPart % 10;
 
-            if (zeroCount > 0 && (jiao > 0 || fen > 0)) {
+            if (zeroCount > 0 && (jiao > 0 || fen > 0) && integerPart > 0) {
                 sb.Append("零");
             }
 
@@ -92,7 +95,7 @@ namespace Sandwych.RmbConverter {
                 sb.Append(RmbDigits[jiao]);
                 sb.Append("角");
             }
-            if ((jiao == 0 && fen > 0 && integerPart > 0)) {
+            if (zeroCount == 0 && jiao == 0 && fen > 0 && integerPart > 0) {
                 sb.Append("零");
             }
             if (fen > 0) {
@@ -104,9 +107,12 @@ namespace Sandwych.RmbConverter {
             }
         }
 
-        private static int ParseInteger(StringBuilder sb, long integer, int zeroCount = 0) {
+        private static int ParseInteger(StringBuilder sb, long integer, bool isFirstSection, int zeroCount) {
             Debug.Assert(integer > 0 && integer <= 9999);
             int nDigits = (int)Math.Floor(Math.Log10(integer)) + 1;
+            if (!isFirstSection && integer < 1000) {
+                zeroCount++;
+            }
             for (var i = 0; i < nDigits; i++) {
                 var factor = (long)Math.Pow(10, nDigits - 1 - i);
                 var digit = integer / factor;

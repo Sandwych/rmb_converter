@@ -22,7 +22,7 @@ namespace Sandwych.RmbConverter.Test {
             decimal i;
 
             i = 1034567890.1299999999999999M;
-            Assert.AreEqual("壹拾亿叁仟肆佰伍拾陆万柒仟捌佰玖拾元壹角叁分", i.ToRmbUpper());
+            Assert.AreEqual("壹拾亿零叁仟肆佰伍拾陆万柒仟捌佰玖拾元零壹角叁分", i.ToRmbUpper());
 
             Assert.That(10000000.00M.ToRmbUpper() == "壹仟万元整");
 
@@ -31,7 +31,7 @@ namespace Sandwych.RmbConverter.Test {
             Assert.That(3456789.10M.ToRmbUpper() == "叁佰肆拾伍万陆仟柒佰捌拾玖元壹角整");
 
             i = 999909009.10M;
-            Assert.AreEqual("玖亿玖仟玖佰玖拾万玖仟零玖元壹角整", i.ToRmbUpper());
+            Assert.AreEqual("玖亿玖仟玖佰玖拾万零玖仟零玖元壹角整", i.ToRmbUpper());
 
             i = 3456789.10M;
             Assert.AreEqual("叁佰肆拾伍万陆仟柒佰捌拾玖元壹角整", i.ToRmbUpper());
@@ -43,14 +43,13 @@ namespace Sandwych.RmbConverter.Test {
             Assert.AreEqual("壹万零壹佰元零叁分", i.ToRmbUpper());
 
             i = 20000.12M;
-            Assert.AreEqual("贰万元壹角贰分", i.ToRmbUpper());
+            Assert.AreEqual("贰万元零壹角贰分", i.ToRmbUpper());
 
             i = 9009999999999999.12M;
             Assert.AreEqual("玖仟零玖万玖仟玖佰玖拾玖亿玖仟玖佰玖拾玖万玖仟玖佰玖拾玖元壹角贰分", i.ToRmbUpper());
 
             i = 11010.12M;
-            Assert.AreEqual("壹万壹仟零壹拾元壹角贰分", i.ToRmbUpper());
-
+            Assert.AreEqual("壹万壹仟零壹拾元零壹角贰分", i.ToRmbUpper());
         }
 
         [Test]
@@ -63,10 +62,11 @@ namespace Sandwych.RmbConverter.Test {
         [Test]
         public void TestZero() {
             Assert.AreEqual("零元整", 0.00M.ToRmbUpper());
-            Assert.AreEqual("壹万零元壹角整", 10000.10M.ToRmbUpper());
-            Assert.AreEqual("壹万零元壹分", 10000.01M.ToRmbUpper());
-            Assert.AreEqual("壹仟零元壹角壹分", 1000.11M.ToRmbUpper());
+            Assert.AreEqual("壹万元零壹角整", 10000.10M.ToRmbUpper());
+            Assert.AreEqual("壹万元零壹分", 10000.01M.ToRmbUpper());
+            Assert.AreEqual("壹仟元零壹角壹分", 1000.11M.ToRmbUpper());
             Assert.AreEqual("壹仟零壹元壹角壹分", 1001.11M.ToRmbUpper());
+            Assert.AreEqual("壹拾万零叁拾元整", 100030.00M.ToRmbUpper());
         }
 
         [Test]
