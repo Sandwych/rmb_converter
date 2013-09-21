@@ -115,6 +115,3 @@ module RmbConverter
   end
 
 end #module
-
-rmb = RmbConverter.to_rmb_upper(123.00)
-p rmb
