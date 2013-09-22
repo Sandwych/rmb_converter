@@ -10,7 +10,6 @@
 
 namespace Sandwych { namespace RmbConverter {
 
-    template<class OStreamType>
     std::string to_upper_rmb(double price); 
 
 }} //namespaces

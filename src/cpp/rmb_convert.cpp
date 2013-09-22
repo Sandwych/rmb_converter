@@ -36,8 +36,7 @@ namespace Sandwych { namespace RmbConverter {
     }
 
 
-    template<class OStreamType> 
-    static int parse_integer(OStreamType& ss, int64_t integer, bool isFirstSection, int zeroCount) {
+    static int parse_integer(stringstream& ss, int64_t integer, bool isFirstSection, int zeroCount) {
         assert(integer > 0 && integer <= 9999);
         int nDigits = (int)floor(log10(integer)) + 1;
         if (!isFirstSection && integer < 1000) {
@@ -64,8 +63,7 @@ namespace Sandwych { namespace RmbConverter {
     }
 
 
-    template<class OStreamType> 
-    static void parse_decimal(OStreamType& ss, int64_t integerPart, int64_t decPart, int zeroCount) {
+    static void parse_decimal(stringstream& ss, int64_t integerPart, int64_t decPart, int zeroCount) {
         assert(decPart > 0 && decPart <= 99);
         int64_t jiao = decPart / 10;
         int64_t fen = decPart % 10;
@@ -90,10 +88,9 @@ namespace Sandwych { namespace RmbConverter {
         }
     }
 
-    template<class OStreamType> 
     string to_upper_rmb(double price) {
 
-        OStreamType ss;
+        stringstream ss;
         price = round(price, 2);
 
         int64_t integerPart = (int64_t)price;
