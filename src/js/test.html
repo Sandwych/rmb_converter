@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="ua-windows ua-webkit">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="rmb_convert.js"></script>
+    <script type="text/javascript">
+        function doConvert() {
+            var inputEle = document.getElementById('numericInput');
+            var resultEle = document.getElementById('resultText');
+            resultEle.innerText = RMBConverter.toUpper(parseFloat(numericInput.value));
+        }
+    </script>
+</head>
+
+<body>
+  
+    <p>
+    输入金额数字：
+    <input id="numericInput" />
+    <input type="button" id="convert" value="转换" onclick="javascript:doConvert();" style="width:80px;height:25px;" />
+    </p>
+    <p>
+    转换结果：
+    <strong>
+        <span id="resultText"> </span>
+    </strong>
+    </p>
+</body>
+
+</html>
