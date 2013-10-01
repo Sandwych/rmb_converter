@@ -106,7 +106,7 @@ class RMBUpper {
         if(!(integer > 0 && integer <= 9999)) {
             throw "Argument 'integer' is out of range";
         }
-        var nDigits = Std.int(Math.floor(Math.log(integer) / Math.log(10))) + 1;
+        var nDigits = Std.int(Math.round(Math.log(integer) / Math.log(10))) + 1;
         if (!isFirstSection && integer < 1000) {
             zeroCount++;
         }

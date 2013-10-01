@@ -34,13 +34,9 @@ var RMBConverter = (function() {
         }
     };
 
-    var log10 = function(v) { 
-        return Math.log(v) / Math.LN10; 
-    }
-
     var parseInteger = function(sb, integer, isFirstSection, zeroCount) {
         //assert(integer > 0 && integer <= 9999);
-        var nDigits = Math.floor(log10(integer)) + 1;
+        var nDigits = Math.round(Math.log(integer) / Math.log(10)) + 1;
         if (!isFirstSection && integer < 1000) {
             zeroCount++;
         }
