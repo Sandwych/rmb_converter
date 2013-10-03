@@ -109,15 +109,16 @@ namespace Sandwych.RmbConverter {
 
         private static int ParseInteger(StringBuilder sb, long integer, bool isFirstSection, int zeroCount) {
             Debug.Assert(integer > 0 && integer <= 9999);
-            int nDigits = (int)Math.Floor(Math.Log10(integer)) + 1;
+            var nDigits = (int)Math.Floor(Math.Log10(integer)) + 1;
             if (!isFirstSection && integer < 1000) {
                 zeroCount++;
             }
             for (var i = 0; i < nDigits; i++) {
                 var factor = (long)Math.Pow(10, nDigits - 1 - i);
+                Debug.Assert(factor > 0);
                 var digit = integer / factor;
-
-                if (digit != 0) {
+                Debug.Assert(digit >= 0 && digit <= 9);
+                if (digit > 0) {
                     if (zeroCount > 0) {
                         sb.Append("零");
                     }

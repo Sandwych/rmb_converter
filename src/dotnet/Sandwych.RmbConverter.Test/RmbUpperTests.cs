@@ -50,6 +50,9 @@ namespace Sandwych.RmbConverter.Test {
 
             i = 11010.12M;
             Assert.AreEqual("壹万壹仟零壹拾元零壹角贰分", i.ToRmbUpper());
+
+            i = 199923.00M;
+            Assert.AreEqual("壹拾玖万玖仟玖佰贰拾叁元整", i.ToRmbUpper());
         }
 
         [Test]

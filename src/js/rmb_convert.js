@@ -36,7 +36,7 @@ var RMBConverter = (function() {
 
     var parseInteger = function(sb, integer, isFirstSection, zeroCount) {
         //assert(integer > 0 && integer <= 9999);
-        var nDigits = Math.round(Math.log(integer) / Math.log(10)) + 1;
+        var nDigits = Math.floor(Math.log(integer + 0.5) / Math.log(10)) + 1;
         if (!isFirstSection && integer < 1000) {
             zeroCount++;
         }
