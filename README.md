@@ -33,4 +33,4 @@
 
 http://www.sandwych.com
 
-任何问题、意见请联系 liwei<at> sandwych [dot] c0m 或 oldrev <at> gmail dot c0m
+任何问题、意见请联系 liwei(at)sandwych[dot]c0m 或 oldrev(at)gmail[dot]c0m
