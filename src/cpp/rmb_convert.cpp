@@ -19,8 +19,8 @@ using namespace std;
 namespace Sandwych { namespace RmbConverter {
 
     inline static double round(double value, int precision) {
-        const int adjustment = pow(10,precision);
-        return floor( value*(adjustment) + 0.5 )/adjustment;
+        const int adjustment = pow(10, precision);
+        return floor(value * adjustment + 0.5) / adjustment;
     }
 
 

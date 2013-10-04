@@ -31,8 +31,8 @@ static void sb_append(StringBuilder* sb, const char* str) {
 
 
 static double round_decimal(double value, int precision) {
-    const int adjustment = pow(10,precision);
-    return floor( value*(adjustment) + 0.5 )/adjustment;
+    const int adjustment = pow(10, precision);
+    return floor(value * adjustment + 0.5) / adjustment;
 }
 
 
