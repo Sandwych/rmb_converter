@@ -7,6 +7,7 @@
 
 * C#
 * C++
+* C
 * HaXe
 * Java
 * Javascript
