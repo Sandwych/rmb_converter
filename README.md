@@ -28,6 +28,9 @@
 #关于
 
 版权所有 (c) 2013 昆明维智众源企业管理咨询有限公司。
+
 保留所有权利。
 
 http://www.sandwych.com
+
+任何问题、意见请联系 liwei<at> sandwych [dot] c0m 或 oldrev <at> gmail dot c0m
