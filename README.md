@@ -14,10 +14,10 @@
 * Lua
 * Python
 * Ruby
+* Rust
 
 计划支持：
 
-* Rust
 * D
 * Haskell
 * Clojure
