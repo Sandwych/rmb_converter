@@ -15,6 +15,7 @@
 * Python
 * Ruby
 * Rust
+* Go
 
 计划支持：
 
@@ -22,7 +23,6 @@
 * Haskell
 * Clojure
 * Scheme
-* Go
 * Erlang
 
 

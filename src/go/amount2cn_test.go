@@ -29,7 +29,7 @@ var expect = []string{
 
 func TestAmount2CN(t *testing.T) {
 	for i, d := range ds {
-		cn, err := ToUpperRMB(d)
+		cn, err := Amount2CN(d)
 		if err != nil {
 			t.Fatal(err)
 		}
