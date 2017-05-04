@@ -15,7 +15,7 @@
 * Python
 * Ruby
 * Rust
-* Go
+* Go  //由网友 @deepzz0 贡献，因为我很讨厌 go，怎么可能写 go 的程序啦
 
 计划支持：
 
