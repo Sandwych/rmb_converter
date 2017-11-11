@@ -6,7 +6,7 @@
 本代码基于 BSD License 授权。
 '''
 
-from cStringIO import StringIO
+from io import StringIO
 import math
 
 _RMB_DIGITS = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖' ]
@@ -65,7 +65,7 @@ def _parse_integer(strio, value, zero_count = 0, is_first_section = False):
     ndigits = int(math.floor(math.log10(value))) + 1
     if value < 1000 and not is_first_section:
         zero_count += 1
-    for i in xrange(0, ndigits):
+    for i in range(0, ndigits):
         factor = int(pow(10, ndigits - 1 - i))
         digit = int(value / factor)
         if digit != 0:
