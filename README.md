@@ -15,7 +15,7 @@
 * Python（同时支持 Python2 和 Python3）
 * Ruby
 * Rust //好几年前的 Rust 版本写的，Rust 1.0 编译不了，求学有余力的同学贡献
-* Go  //由网友 @henry.chen & @deepzz0 贡献，因为我很讨厌 go，怎么可能写 go 的程序啦
+* Go  //由网友 @henry.chen & @deepzz0 贡献，因为我（其他语言实现作者）很讨厌 go 语言
 
 计划支持：
 
