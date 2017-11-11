@@ -15,9 +15,9 @@ _SECTION_CHARS = ['', '拾', '佰', '仟', '万' ]
 def to_rmb_upper(price):
     price = round(price, 2)
     integer_part = int(price)
-    wanyi_part = integer_part / 1000000000000
-    yi_part = integer_part % 1000000000000 / 100000000
-    wan_part = integer_part % 100000000 / 10000
+    wanyi_part = integer_part // 1000000000000
+    yi_part = integer_part % 1000000000000 // 100000000
+    wan_part = integer_part % 100000000 // 10000
     qian_part = integer_part % 10000
     dec_part = int(price * 100 % 100)
 
@@ -76,12 +76,12 @@ def _parse_integer(strio, value, zero_count = 0, is_first_section = False):
             zero_count = 0
         else:
             zero_count += 1
-        value -= value / factor * factor
+        value -= value // factor * factor
     return zero_count
 
 def _parse_decimal(strio, integer_part, value, zero_count):
     assert value > 0 and value <= 99
-    jiao = value / 10
+    jiao = value // 10
     fen = value % 10
     if zero_count > 0 and (jiao > 0 or fen > 0) and integer_part > 0:
         strio.write('零')
@@ -95,4 +95,3 @@ def _parse_decimal(strio, integer_part, value, zero_count):
         strio.write('分')
     else:
         strio.write('整')
-
