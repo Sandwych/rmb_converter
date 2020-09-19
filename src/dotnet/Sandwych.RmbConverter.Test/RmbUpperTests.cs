@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using NUnit.Framework;
 
-namespace Sandwych.RmbConverter.Test {
-
+namespace Sandwych.RmbConverter.Test
+{
     [TestFixture]
-    public class RmbUpperTests {
+    public class RmbUpperTests
+    {
 
         [Test]
-        public void TestRandomly([Random(0.00, 99999999999.99, 5)] double price) {
+        public void TestRandomly([Random(0.00, 99999999999.99, 5)] double price)
+        {
             var d = new decimal(price);
-            Assert.IsNotNullOrEmpty(d.ToRmbUpper());
+            var rmb = d.ToRmbUpper();
+            Assert.IsNotNull(rmb);
+            Assert.IsNotEmpty(rmb);
         }
 
         [Test]
-        public void TestConverts() {
+        public void TestConverts()
+        {
             decimal i;
 
             i = 1034567890.1299999999999999M;
@@ -56,14 +55,16 @@ namespace Sandwych.RmbConverter.Test {
         }
 
         [Test]
-        public void TestDecimalProcessing() {
+        public void TestDecimalProcessing()
+        {
             Assert.AreEqual("叁角整", 0.30M.ToRmbUpper());
             Assert.AreEqual("叁角叁分", 0.33M.ToRmbUpper());
             Assert.AreEqual("叁分", 0.03M.ToRmbUpper());
         }
 
         [Test]
-        public void TestZero() {
+        public void TestZero()
+        {
             Assert.AreEqual("零元整", 0.00M.ToRmbUpper());
             Assert.AreEqual("壹万元零壹角整", 10000.10M.ToRmbUpper());
             Assert.AreEqual("壹万元零壹分", 10000.01M.ToRmbUpper());
@@ -73,7 +74,8 @@ namespace Sandwych.RmbConverter.Test {
         }
 
         [Test]
-        public void TestBaiduCases() {
+        public void TestBaiduCases()
+        {
             //源自百度百科的测试用例 http://baike.baidu.com/view/2369188.htm
             Assert.AreEqual("陆仟伍佰元整", 6500.00M.ToRmbUpper());
             Assert.AreEqual("叁仟壹佰伍拾元零伍角整", 3150.50M.ToRmbUpper());
@@ -83,5 +85,4 @@ namespace Sandwych.RmbConverter.Test {
             Assert.AreEqual("壹拾伍万零壹元整", 150001.00M.ToRmbUpper());
         }
     }
-
 }
