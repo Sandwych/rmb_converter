@@ -19,7 +19,7 @@ def to_rmb_upper(price):
     yi_part = integer_part % 1000000000000 // 100000000
     wan_part = integer_part % 100000000 // 10000
     qian_part = integer_part % 10000
-    dec_part = int(price * 100 % 100)
+    dec_part = int(round(price * 100 % 100))
 
     strio = StringIO()
 
