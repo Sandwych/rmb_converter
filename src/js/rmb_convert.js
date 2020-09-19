@@ -66,12 +66,12 @@ var RMBConverter = (function() {
 
         var sb = [];
 
-        var integerPart = Math.floor(price);
-        var wanyiPart = Math.floor(integerPart / 1000000000000);
+        var integerPart = Math.trunc(price);
+        var wanyiPart = Math.trunc(integerPart / 1000000000000);
         var yiPart = integerPart % 1000000000000 / 100000000;
-        var wanPart = Math.floor(integerPart % 100000000 / 10000);
+        var wanPart = Math.trunc(integerPart % 100000000 / 10000);
         var qianPart = integerPart % 10000;
-        var decPart = Math.floor(price * 100) % 100;
+        var decPart = Math.round(price * 100 % 100);
 
         var zeroCount = 0;
 
